@@ -1,0 +1,142 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Auto fil</title>
+
+
+    <style>
+        * {
+            padding: 0px;
+            margin: 0px;
+            font-family: Arial;
+        }
+
+        input {
+            padding: 8px;
+            width: 100%;
+            border: 2px solid #dcdcdc;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            font-size: 31px;
+            color: #ff6a00;
+            text-align: center;
+            background-image: -webkit-linear-gradient(90deg,#f35626,#feab3a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            -webkit-animation: hue 60s infinite linear;
+            font-weight: normal;
+            margin: 50px auto 25px;
+        }
+
+        .main {
+            background: #fff;
+            position: relative;
+            max-width: 100%;
+            width: 500px;
+            margin: 25px auto 50px;
+            padding: 20px;
+        }
+
+
+
+        @-webkit-keyframes hue {
+            from {
+                -webkit-filter: hue-rotate(0deg);
+            }
+
+            to {
+                -webkit-filter: hue-rotate(-360deg);
+            }
+        }
+           
+
+        .rated, .starHover {
+            color: gold;
+        }
+
+        .starHover i {
+           transform:rotate(360deg); transition: all ease 1s;
+        }
+
+        i {
+            cursor: pointer;
+        }
+    </style>
+
+    <script src="jquery.min.js"></script>
+</head>
+<body>
+
+    <h1>WM Animation Star Rating </h1>
+    <div class="main" data-star-count="5">
+
+        <div class="stars" data-star-count="5"></div>
+        <div class="stars" data-star-count="7"></div>
+        <div class="stars" data-star-count="10"></div>
+        <div class="stars" data-star-count="15"></div>
+        <div class="stars" data-star-count="20"></div>
+    </div>
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <script>
+
+        
+        $(".stars").each(function () {
+            var starCount = $(this).attr("data-star-count");
+            console.log(starCount);
+            for (var i = 0; i < starCount; i++) {
+                $(this).append("<span data-count=" + (i + 1) + "><i class='material-icons'>star_border</i></span>")
+            };
+            $(this).append("<input type='hidden' name='givenstar' value=''/>")
+        });
+        
+
+        $(".stars span").click(function () {
+            $(".active.stars span").removeClass("rated");
+            
+            stopStar = $(this).attr("data-count");
+            $(".active.stars input").val(stopStar);
+            var i = 1;
+            $(".active.stars span").each(function () {
+                if (i <= stopStar) {
+                    $(".active.stars span[data-count='" + i + "']").addClass("rated");
+                    i++;
+                    console.log(i);
+                }
+
+
+            });
+
+
+        });
+        $(".stars span").mouseenter(function () {
+            // $(".stars span").removeClass("rated");
+            $(this).parent().addClass("active");
+            stopStar = $(this).attr("data-count");
+            var i = 1;
+            $(".stars span").each(function () {
+                if (i <= stopStar) {
+                    $(".active.stars span[data-count='" + i + "']").addClass("starHover");
+                    i++;
+                }
+
+            });
+
+
+        });
+        $(".stars span").mouseout(function () {
+           
+            $(".active.stars span").removeClass("starHover");
+            $(this).parent().removeClass("active");
+
+        });
+
+
+    </script>
+
+
+</body>
+</html>
